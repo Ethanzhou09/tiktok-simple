@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/Ethanzhou09/tiktok-simple/cmd/gateway/handler"
+	"tiktok-simple/cmd/gateway/handler"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
 	"github.com/cloudwego/hertz/pkg/common/utils"
