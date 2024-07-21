@@ -1,12 +1,8 @@
 package main
 
 import (
-	"context"
-	"tiktok-simple/cmd/gateway/handler"
-	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
-	"github.com/cloudwego/hertz/pkg/common/utils"
-	"github.com/cloudwego/hertz/pkg/protocol/consts"
+	"tiktok-simple/cmd/gateway/handler"
 )
 
 func registerGroup(hz *server.Hertz) {
@@ -14,10 +10,9 @@ func registerGroup(hz *server.Hertz) {
 	{
 		user := douyin.Group("/user")
 		{
-			user.GET("/", )
+			user.GET("/", handler.UserInfo)
 			user.POST("/register/", handler.Login)
-			user.POST("/login/",handler.Register )
-
+			user.POST("/login/", handler.Register)
 		}
 		// message := douyin.Group("/message")
 		// {
@@ -39,7 +34,7 @@ func registerGroup(hz *server.Hertz) {
 		// 	publish.GET("/list/",)
 		// 	publish.POST("/action/",)
 		// }
-		douyin.GET("/feed",)
+		douyin.GET("/feed", handler.Feed)
 		// favorite := douyin.Group("/favorite")
 		// {
 		// 	favorite.POST("/action/",)
@@ -54,9 +49,8 @@ func registerGroup(hz *server.Hertz) {
 }
 
 func InitHertz() *server.Hertz {
-    h := server.Default()
-    registerGroup(h)
-    return h
+	h := server.Default()
+	return h
 }
 
 func main() {
@@ -64,5 +58,5 @@ func main() {
 
 	registerGroup(hz)
 
-    hz.Spin()
+	hz.Spin()
 }

@@ -15,3 +15,8 @@ func Login(ctx context.Context, c *app.RequestContext){
 	
 
 }
+
+func UserInfo(ctx context.Context, c *app.RequestContext){
+	
+
+}
