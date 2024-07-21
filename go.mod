@@ -1,4 +1,4 @@
-module tiktok-simple
+module github.com/Ethanzhou09/tiktok-simple
 
 go 1.20
 
