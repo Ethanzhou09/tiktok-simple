@@ -1,8 +1,10 @@
 package main
 
 import (
-	"github.com/cloudwego/hertz/pkg/app/server"
+	"tiktok-simple/cmd/gateway/rpc"
 	"tiktok-simple/cmd/gateway/handler"
+
+	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
 func registerGroup(hz *server.Hertz) {
@@ -54,6 +56,8 @@ func InitHertz() *server.Hertz {
 }
 
 func main() {
+	rpc.Init()
+
 	hz := InitHertz()
 
 	registerGroup(hz)
