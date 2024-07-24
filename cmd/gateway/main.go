@@ -56,7 +56,7 @@ func InitHertz() *server.Hertz {
 }
 
 func main() {
-	rpc.Init()
+	rpc.InitRPC()
 
 	hz := InitHertz()
 

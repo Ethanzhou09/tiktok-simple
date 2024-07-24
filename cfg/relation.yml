@@ -1,7 +1,6 @@
-server:
-  name: "TiktokCommentServer"
+srv:
   host: 127.0.0.1
-  port: 8080
+  port: 8087
 
 etcd:
   host: 127.0.0.1

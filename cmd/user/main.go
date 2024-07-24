@@ -16,8 +16,8 @@ func main(){
 	cfginit.InitViper()
 	r := cfginit.EtcdInit()
 	addr := cfginit.GetSrvAddr()
-	usersrv := service.GetUserSrv()
-	server := userservice.NewServer(usersrv,server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "User"}), server.WithRegistry(r), server.WithServiceAddr(addr), server.WithReadWriteTimeout(5*time.Second), server.WithExitWaitTime(5*time.Second))
+	srv := service.GetUserSrv()
+	server := userservice.NewServer(srv,server.WithServerBasicInfo(&rpcinfo.EndpointBasicInfo{ServiceName: "User"}), server.WithRegistry(r), server.WithServiceAddr(addr), server.WithReadWriteTimeout(5*time.Second), server.WithExitWaitTime(5*time.Second))
     err := server.Run()
     if err != nil {
         log.Fatal(err)
