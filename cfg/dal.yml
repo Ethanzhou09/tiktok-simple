@@ -1,0 +1,12 @@
+mysql:
+  driverName: mysql
+  host: 127.0.0.1
+  port: 13306
+  database: tiktok-simple
+  username: user
+  password: 123456
+  charset: utf8mb4
+
+redis:
+  addr: 127.0.0.1
+  port: 6379
