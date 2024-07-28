@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-var jwtSecret = []byte("TodoList")
+var jwtSecret = []byte("Simple-tiktok")
 
 type Claims struct {
 	Id uint `json:"id"`
@@ -20,7 +20,7 @@ func GenerateToken(id uint) (string, error) {
 		Id: id,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
-			Issuer:    "todoList",
+			Issuer:    "simple-tiktok",
 		},
 	}
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
