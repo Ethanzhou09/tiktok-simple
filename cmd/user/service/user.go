@@ -72,11 +72,79 @@ func (usrsrv *UserService) Register(ctx context.Context, req *user.UserRegisterR
 }
 
 func (usrsrv *UserService) Login(ctx context.Context, req *user.UserLoginRequest) (res *user.UserLoginResponse, err error) {
-
-	return
+	usr, err := db.GetUserByName(req.Username)
+	if err!=nil{
+		res := &user.UserLoginResponse{
+			StatusCode: -1,
+			StatusMsg:  "登录失败：服务器内部错误",
+		}
+		return res, err
+	}
+	if usr == nil {
+		res := &user.UserLoginResponse{
+			StatusCode: -1,
+			StatusMsg:  "登录失败：用户名不存在",
+		}
+		return res, nil
+	}
+	if usr.Password!= crypt.Md5Encrypt(req.Password) {
+		res := &user.UserLoginResponse{
+			StatusCode: -1,
+			StatusMsg:  "登录失败：密码错误",
+		}
+		return res, nil
+	}
+	token, err := jwt.GenerateToken(usr.ID)
+	if err != nil {
+		res := &user.UserLoginResponse{
+			StatusCode: -1,
+			StatusMsg:  "注册失败：token生成失败",
+		}
+		return res, nil
+	}
+	res = &user.UserLoginResponse{
+		StatusCode: 0,
+		StatusMsg:  "success",
+		UserId:     int64(usr.ID),
+		Token:      token,
+	}
+	return res, nil
 }
 
 func (usrsrv *UserService) UserInfo(ctx context.Context, req *user.UserInfoRequest) (res *user.UserInfoResponse, err error) {
-
-	return
+	userid := req.UserId
+	usr,err := db.GetUserById(ctx,userid)
+	if err!=nil{
+		res := &user.UserInfoResponse{
+			StatusCode: -1,
+			StatusMsg:  "获取用户信息失败：服务器内部错误",
+		}
+		return res, err
+	}
+	if usr == nil {
+		res := &user.UserInfoResponse{
+			StatusCode: -1,
+			StatusMsg:  "获取用户信息失败：用户不存在",
+		}
+		return res, nil
+	}
+	//返回结果
+	res = &user.UserInfoResponse{
+		StatusCode: 0,
+		StatusMsg:  "success",
+		User: &user.User{
+			Id:              int64(usr.ID),
+			Name:            usr.UserName,
+			FollowCount:     int64(usr.FollowingCount),
+			FollowerCount:   int64(usr.FollowerCount),
+			IsFollow:        userid == int64(usr.ID),
+			// Avatar:          avatar,
+			// BackgroundImage: backgroundImage,
+			Signature:       usr.Signature,
+			TotalFavorited:  int64(usr.TotalFavorited),
+			WorkCount:       int64(usr.WorkCount),
+			FavoriteCount:   int64(usr.FavoriteCount),
+		},
+	}
+	return res, nil
 }

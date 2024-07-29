@@ -7,7 +7,7 @@ import (
 var v *viper.Viper
 
 type DalConfig struct{
-	Db Db `mapstructure:"db"`
+	Db Db `mapstructure:"mysql"`
 	Redis Redis `mapstructure:"redis"`
 }
 type Db struct{

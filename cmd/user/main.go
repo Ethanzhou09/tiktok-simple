@@ -5,6 +5,7 @@ import (
 	"log"
 	"tiktok-simple/cmd/user/service"
 	"tiktok-simple/idl/kitex_gen/user/userservice"
+	"tiktok-simple/dal/db"
 	"time"
 
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
@@ -13,6 +14,7 @@ import (
 
 
 func main(){
+	db.Init()
 	cfginit.InitViper()
 	r := cfginit.EtcdInit()
 	addr := cfginit.GetSrvAddr()

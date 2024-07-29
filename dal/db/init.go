@@ -15,6 +15,8 @@ func Init(){
 	viper.Init()
 	dbconfig := viper.GetdbConfig()
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbconfig.Username, dbconfig.Password, dbconfig.Host, dbconfig.Port, dbconfig.Database)
+	fmt.Println(dsn)
+
 	DB,err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err!= nil {
 		log.Fatal(err)
