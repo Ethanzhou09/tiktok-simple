@@ -24,6 +24,22 @@ type Redis struct{
 	Port string `mapstructure:"port"`
 }
 
+type Minio struct{
+	Endpoint string `mapstructure:"Endpoint"`
+	AccessKeyId string `mapstructure:"AccessKeyId"`
+	SecretAccessKey string `mapstructure:"SecretAccessKey"`
+	UseSSL bool `mapstructure:"UseSSL"`
+	VideoBucketName string `mapstructure:"VideoBucketName"`
+	CoverBucketName string `mapstructure:"CoverBucketName"`
+	AvatarBucketName string `mapstructure:"AvatarBucketName"`
+	BackgroundImageBucketName string `mapstructure:"BackgroundImageBucketName"`
+	ExpireTime int `mapstructure:"ExpireTime"`
+}
+
+type MinioConfig struct{
+	Minio Minio `mapstructure:"Minio"`
+}
+
 func Init(){
 	v = viper.New()
 	v.SetConfigFile("../../cfg/dal.yml")
@@ -38,4 +54,16 @@ func GetdbConfig() *Db{
 	var config DalConfig
 	v.Unmarshal(&config)
 	return &config.Db
+}
+
+func InitMinioCfg(){
+	v = viper.New()
+	v.SetConfigFile("../../cfg/minio.yml")
+	v.ReadInConfig()
+}
+
+func GetMinioCfg() *Minio{
+	var config MinioConfig
+	v.Unmarshal(&config)
+	return &(config.Minio)
 }
