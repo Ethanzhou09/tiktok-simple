@@ -33,7 +33,7 @@ func RegisterGroup(hz *server.Hertz) {
 		// 	publish.GET("/list/",)
 		// 	publish.POST("/action/",)
 		// }
-		douyin.GET("/feed", handler.Feed)
+		// douyin.GET("/feed", handler.Feed)
 		// favorite := douyin.Group("/favorite")
 		// {
 		// 	favorite.POST("/action/",)

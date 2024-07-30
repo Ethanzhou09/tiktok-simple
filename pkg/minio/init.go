@@ -7,7 +7,12 @@ import (
 	"tiktok-simple/pkg/viper"
 )
 
-var MinioClient *minio.Client
+var (
+	MinioClient               *minio.Client
+	ExpireTime                int
+	AvatarBucketName          string
+	BackgroundImageBucketName string
+)
 
 func Init() {
 	viper.InitMinioCfg()
@@ -21,4 +26,7 @@ func Init() {
 		log.Fatalln(err)
 	}
 	MinioClient = s3client
+	ExpireTime = miniocfg.ExpireTime
+	AvatarBucketName = miniocfg.AvatarBucketName
+	BackgroundImageBucketName = miniocfg.BackgroundImageBucketName
 }

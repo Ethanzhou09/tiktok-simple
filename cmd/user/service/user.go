@@ -8,7 +8,9 @@ import (
 	"tiktok-simple/idl/kitex_gen/user"
 	"tiktok-simple/pkg/crypt"
 	"tiktok-simple/pkg/jwt"
+	"tiktok-simple/pkg/minio"
 	"time"
+
 )
 
 type UserService struct{}
@@ -128,6 +130,23 @@ func (usrsrv *UserService) UserInfo(ctx context.Context, req *user.UserInfoReque
 		}
 		return res, nil
 	}
+	avatar, err := minio.GetFileTemporaryURL(minio.AvatarBucketName, usr.Avatar)
+
+	if err != nil {
+		res := &user.UserInfoResponse{
+			StatusCode: -1,
+			StatusMsg:  "服务器内部错误：获取头像失败",
+		}
+		return res, nil
+	}
+	backgroundImage, err := minio.GetFileTemporaryURL(minio.BackgroundImageBucketName, usr.BackgroundImage)
+	if err != nil {
+		res := &user.UserInfoResponse{
+			StatusCode: -1,
+			StatusMsg:  "服务器内部错误：获取背景图失败",
+		}
+		return res, nil
+	}
 	//返回结果
 	res = &user.UserInfoResponse{
 		StatusCode: 0,
@@ -138,8 +157,8 @@ func (usrsrv *UserService) UserInfo(ctx context.Context, req *user.UserInfoReque
 			FollowCount:     int64(usr.FollowingCount),
 			FollowerCount:   int64(usr.FollowerCount),
 			IsFollow:        userid == int64(usr.ID),
-			// Avatar:          avatar,
-			// BackgroundImage: backgroundImage,
+			Avatar:          avatar,
+			BackgroundImage: backgroundImage,
 			Signature:       usr.Signature,
 			TotalFavorited:  int64(usr.TotalFavorited),
 			WorkCount:       int64(usr.WorkCount),
