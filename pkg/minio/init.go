@@ -12,6 +12,11 @@ var (
 	ExpireTime                int
 	AvatarBucketName          string
 	BackgroundImageBucketName string
+	VideoBucketName           string
+	CoverBucketName           string
+	MinioEndPoint             string
+	MinioAccessKeyId          string
+	MinioSecretAccessKey      string
 )
 
 func Init() {
@@ -29,4 +34,9 @@ func Init() {
 	ExpireTime = miniocfg.ExpireTime
 	AvatarBucketName = miniocfg.AvatarBucketName
 	BackgroundImageBucketName = miniocfg.BackgroundImageBucketName
+	VideoBucketName = miniocfg.VideoBucketName
+	CoverBucketName = miniocfg.CoverBucketName
+	MinioEndPoint = miniocfg.Endpoint
+	MinioAccessKeyId = miniocfg.AccessKeyId
+	MinioSecretAccessKey = miniocfg.SecretAccessKey
 }
